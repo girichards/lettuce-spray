@@ -42,7 +42,8 @@ libraryDependencies ++= {
     "com.typesafe.play"   %%  "play-json"     % "2.2.0",
     "org.specs2"          %%  "specs2-core"   % specs2V % "test",
     "org.specs2"          %%  "specs2-junit"  % specs2V % "test",
-    "junit"               % "junit"           % "4.11" % "test"
+    "junit"               % "junit"           % "4.11" % "test",
+    "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
   )
 }
 
