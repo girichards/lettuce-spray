@@ -18,6 +18,8 @@ scalacOptions ++= Seq(
   "-encoding", "UTF-8"
 )
 
+org.scalastyle.sbt.ScalastylePlugin.Settings
+
 resolvers ++= Seq(
   "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/",
   "Sonatype releases" at "http://oss.sonatype.org/content/repositories/releases/",
