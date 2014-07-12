@@ -43,7 +43,8 @@ libraryDependencies ++= {
     "org.specs2"          %%  "specs2-core"   % specs2V % "test",
     "org.specs2"          %%  "specs2-junit"  % specs2V % "test",
     "junit"               % "junit"           % "4.11" % "test",
-    "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2"
+    "com.typesafe.scala-logging" %% "scala-logging-slf4j" % "2.1.2",
+    "org.slf4j" % "slf4j-log4j12" % "1.7.7"
   )
 }
 
