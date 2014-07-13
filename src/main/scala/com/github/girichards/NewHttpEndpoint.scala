@@ -21,15 +21,17 @@ class NewHttpEndpoint(actorRef: ActorRef) extends Actor with NewHttpEndpointRout
 
 trait NewHttpEndpointRoutes extends HttpService {
 
-  import HelloWorldServiceActor._
+//  import HelloWorldServiceActor._
+  import MyService._
+  
   implicit val askTimeOut = Timeout(5000)
   implicit def executionContext: scala.concurrent.ExecutionContext = actorRefFactory.dispatcher
 
   def routes(actorRef: ActorRef): spray.routing.RequestContext => Unit =
     pathPrefix("api") {
       path("hello") {
-        onComplete(actorRef ? Message("hi there")) {
-          case Success(reply: Reply) => complete { reply.message }
+        onComplete(actorRef ? ServiceMessage("hi there")) {
+          case Success(reply: ServiceReply) => complete { reply.message }
           case Failure(f) => complete { "Failure: " + f }
         }
       }

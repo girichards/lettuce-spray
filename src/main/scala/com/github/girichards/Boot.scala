@@ -16,9 +16,10 @@ object Boot extends App with LazyLogging {
 
   implicit val system = ActorSystem("on-spray-can")
 
-  val hello = system.actorOf(HelloWorldServiceActor.props, "hello-service")
+  val backend = system.actorOf(BackendService.props, "backend-service")
+  val mySvc = system.actorOf(MyService.props(backend), "my-service")
 
-  val service = system.actorOf(NewHttpEndpoint.props(hello), "demo-service")
+  val service = system.actorOf(NewHttpEndpoint.props(mySvc), "demo-service")
 
   implicit val timeout = Timeout(5.seconds)
   IO(Http) ? Http.Bind(service, interface = "0.0.0.0", port = 8080)
