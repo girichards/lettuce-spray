@@ -11,17 +11,16 @@ class NewHttpEndpointSpec extends Specification with Specs2RouteTest
   def actorRefFactory = system
 
   "Simplest Calls to the Endpoint" should {
-    
-    val helloActorRef = system.actorOf(HelloWorldServiceActor.props)
-    
+
+    val backendRef = system.actorOf(BackendService.props)
+    val serviceRef = system.actorOf(MyService.props(backendRef))
+
     "return a simple hello on /api" in {
-      Get("/api/hello") ~> routes(helloActorRef) ~> check {
-        // "xxx" must have size (11)
-        // status equals OK 
+      Get("/api/hello") ~> routes(serviceRef) ~> check {
         responseAs[String] must contain("You said, 'hi there'")
       }
     }
-    
+
   }
 
 }
