@@ -10,8 +10,8 @@ import spray.httpx.marshalling.ToResponseMarshallable.isMarshallable
 
 import com.typesafe.scalalogging.slf4j.LazyLogging
 
-class HelloWorldService(actor: ActorRef)(implicit executionContext: ExecutionContext)
-  extends RouteConcatenation with PathDirectives with ParameterDirectives with RouteDirectives with FutureDirectives 
+class HelloWorldService(actor: ActorRef)(implicit executionContext: ExecutionContext) extends RouteConcatenation
+  with PathDirectives with ParameterDirectives with RouteDirectives with FutureDirectives
   with LazyLogging {
 
   import HelloWorldServiceActor._
@@ -20,7 +20,7 @@ class HelloWorldService(actor: ActorRef)(implicit executionContext: ExecutionCon
 
   implicit val timeout = Timeout(2.seconds)
 
-  val route = {
+  val route: spray.routing.RequestContext => Unit = {
     pathPrefix("x" / "y") {
       parameter('message.as[String]).as(Message) {
         payload =>
@@ -36,5 +36,4 @@ class HelloWorldService(actor: ActorRef)(implicit executionContext: ExecutionCon
     }
   }
 
- 
 }

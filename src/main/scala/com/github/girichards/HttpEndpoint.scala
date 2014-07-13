@@ -11,13 +11,13 @@ object HttpEndpoint {
 class HttpEndpoint extends Actor with HttpEndpointRoutes {
 
   val actorRefFactory = context
-
   val receive = runRoute(routes)
 
 }
 
 trait HttpEndpointRoutes extends HttpService {
 
-  def routes = pathPrefix("api") { complete { "hello api" } }
+  def routes: spray.routing.RequestContext => Unit =
+    pathPrefix("api") { complete { "hello api" } }
 
 }

@@ -23,15 +23,16 @@ trait NewHttpEndpointRoutes extends HttpService {
 
   import HelloWorldServiceActor._
   implicit val askTimeOut = Timeout(5000)
-  implicit def executionContext = actorRefFactory.dispatcher
+  implicit def executionContext: scala.concurrent.ExecutionContext = actorRefFactory.dispatcher
 
-  def routes(actorRef: ActorRef) = pathPrefix("api") {
-    path("hello") {
-      onComplete(actorRef ? Message("hi there")) {
-        case Success(reply: Reply) => complete { reply.message }
-        case Failure(f) => complete { "Failure: " + f }
+  def routes(actorRef: ActorRef): spray.routing.RequestContext => Unit =
+    pathPrefix("api") {
+      path("hello") {
+        onComplete(actorRef ? Message("hi there")) {
+          case Success(reply: Reply) => complete { reply.message }
+          case Failure(f) => complete { "Failure: " + f }
+        }
       }
     }
-  }
 
 }
