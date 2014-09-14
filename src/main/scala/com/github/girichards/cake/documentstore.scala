@@ -1,3 +1,4 @@
+package com.github.girichards.cake
 
 // http://www.cakesolutions.net/teamblogs/2011/12/19/cake-pattern-in-depth
 // https://github.com/levkhomich/akka-tracing/wiki/Setup
@@ -80,12 +81,14 @@ trait DefaultDocumentServiceComponent extends DocumentServiceComponent {
 }
 
 object ImplementItWithJDBC extends App {
+  println("ImplementItWithJDBC")
   val docService = new DefaultDocumentServiceComponent with DocumentStoreJDBCComponent
-  docService.documentService.find("")
+  docService.documentService.store(new Document())
 }
 
 object ImplementItWithCassandra extends App {
+  println("ImplementItWithCassandra")
   val docService = new DefaultDocumentServiceComponent with DocumentStoreCassandraComponent
-  docService.documentService.find("")
+  docService.documentService.store(new Document())
 }
 
