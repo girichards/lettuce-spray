@@ -20,32 +20,42 @@ trait DocumentStoreComponent {
 
 trait DocumentStoreJDBCComponent extends DocumentStoreComponent {
 
-  trait DocumentStoreJDBC extends DocumentStore {
+  def documentStore = new DocumentStoreJDBC()
+  
+  class DocumentStoreJDBC extends DocumentStore {
     def find(id: String): Document = { new Document() }
-    def store(document: Document)
+    def store(document: Document) = {
+    	println("JDBC")
+    }
   }
 
 }
 
 trait DocumentStoreMongoDBComponent extends DocumentStoreComponent {
-
-  trait DocumentStoreMongoDB extends DocumentStore {
+  
+  def documentStore = new DocumentStoreMongoDB()
+  
+  class DocumentStoreMongoDB extends DocumentStore {
     def find(id: String): Document = { new Document() }
-    def store(document: Document)
+    def store(document: Document) = {
+    	println("MongoDB")
+    }
   }
 
 }
 
 trait DocumentStoreCassandraComponent extends DocumentStoreComponent {
 
-  trait DocumentStoreCassandra extends DocumentStore {
+  def documentStore = new DocumentStoreCassandra()
+  
+  class DocumentStoreCassandra extends DocumentStore {
     def find(id: String): Document = { new Document() }
-    def store(document: Document)
+    def store(document: Document) = {
+    	println("Cassandra")
+    }
   }
 
 }
-
-
 
 trait DocumentServiceComponent {
 
@@ -69,7 +79,13 @@ trait DefaultDocumentServiceComponent extends DocumentServiceComponent {
 
 }
 
+object ImplementItWithJDBC extends App {
+  val docService = new DefaultDocumentServiceComponent with DocumentStoreJDBCComponent
+  docService.documentService.find("")
+}
 
-
-
+object ImplementItWithCassandra extends App {
+  val docService = new DefaultDocumentServiceComponent with DocumentStoreCassandraComponent
+  docService.documentService.find("")
+}
 
