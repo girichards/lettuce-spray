@@ -15,9 +15,8 @@ object Boot extends App with LazyLogging {
   logger.info("Starting app...")
 
   implicit val system = ActorSystem("on-spray-can")
-
   val service = system.actorOf(HttpEndpoint.props, "demo-service")
 
   implicit val timeout = Timeout(5.seconds)
-  IO(Http) ? Http.Bind(service, interface = "0.0.0.0", port = 8080)
+  IO(Http) ? Http.Bind(service, interface = "0.0.0.0", port = 8088)
 }
